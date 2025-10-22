@@ -880,6 +880,37 @@ body {
   transition: all 1s ease-out;
 }
 
+/* Professional Abilities Styles */
+.professional-abilities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.professional-ability-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  transition: all 0.7s ease;
+}
+
+.professional-ability-bullet {
+  color: #2563eb;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.professional-ability-text {
+  color: #374151;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0;
+}
+
 .education-section {
   display: flex;
   flex-direction: column;
@@ -1095,8 +1126,7 @@ body {
   background-color: rgba(0, 0, 0, 0);
   transition: all 0.3s ease;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 0.75rem;
 }
 
 .portfolio-card:hover .portfolio-image-overlay {
@@ -1119,11 +1149,13 @@ body {
   color: #1f2937;
   padding: 0.5rem;
   border-radius: 9999px;
+  border: none;
   transition: background-color 0.3s ease;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .portfolio-action-btn:hover {
@@ -1282,6 +1314,155 @@ body {
   height: 100%;
   background: linear-gradient(to right, #3b82f6, #9333ea);
   transition: all 0.3s ease-out;
+}
+
+/* 触摸交互优化 */
+@media (max-width: 768px) {
+  /* 确保所有可点击元素至少44px */
+  button,
+  .portfolio-category-btn,
+  .mobile-nav-link,
+  .desktop-nav-link,
+  .mobile-nav-toggle,
+  a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 16px;
+    touch-action: manipulation;
+  }
+  
+  /* 增加点击区域间距 */
+  .portfolio-categories {
+    gap: 12px;
+  }
+  
+  .portfolio-category-btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    border-radius: 25px;
+  }
+  
+  /* 联系方式卡片触摸优化 */
+  .flex.flex-wrap.justify-center.gap-6 > * {
+    min-height: 50px;
+    padding: 12px 16px;
+    margin: 6px;
+  }
+  
+  /* 技能卡片触摸优化 */
+  .skill-card {
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  
+  /* 作品集卡片触摸优化 */
+  .portfolio-card {
+    margin-bottom: 20px;
+    border-radius: 12px;
+  }
+  
+  .portfolio-card-content {
+    padding: 20px;
+  }
+  
+  /* 生活照片卡片触摸优化 */
+  .life-photo-card {
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  
+  /* 导航按钮触摸优化 */
+  .mobile-nav-toggle {
+    width: 56px;
+    height: 56px;
+    top: 16px;
+    left: 16px;
+  }
+  
+  .mobile-nav-link {
+    padding: 16px 24px;
+    font-size: 1.1rem;
+  }
+  
+  .mobile-nav-icon {
+    font-size: 1.3rem;
+    margin-right: 16px;
+  }
+  
+  /* 文本选择优化 */
+  * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* 允许文本内容被选择 */
+  p, span, h1, h2, h3, h4, h5, h6, .professional-ability-text {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  
+  /* 滚动优化 */
+  html {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* 输入框触摸优化（如果有的话） */
+  input, textarea, select {
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 16px; /* 防止iOS缩放 */
+  }
+}
+
+/* 小屏幕设备进一步触摸优化 */
+@media (max-width: 480px) {
+  /* 更大的触摸目标 */
+  button,
+  .portfolio-category-btn,
+  .mobile-nav-link {
+    min-height: 48px;
+    padding: 14px 18px;
+  }
+  
+  .mobile-nav-toggle {
+    width: 60px;
+    height: 60px;
+  }
+  
+  /* 增加间距以避免误触 */
+  .portfolio-categories {
+    gap: 16px;
+    padding: 0 16px;
+  }
+  
+  .portfolio-category-btn {
+    padding: 14px 24px;
+    margin: 4px;
+  }
+  
+  /* 专业技能列表触摸优化 */
+  .professional-ability-item {
+    padding: 16px 0;
+    margin: 8px 0;
+  }
+  
+  /* 技能卡片间距优化 */
+  .skills-grid {
+    gap: 20px;
+  }
+  
+  .skill-card {
+    padding: 24px;
+  }
 }
 
 /* 浮动粒子样式 */
@@ -1492,9 +1673,276 @@ body {
   }
 }
 
-/* 响应式调整 */
+/* 生活模块样式 */
+.life-module-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.life-module-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.life-module-title {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.life-module-main-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.life-module-subtitle {
+  font-size: 1.25rem;
+  color: #4b5563;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.life-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.life-photo-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 300px;
+}
+
+.life-photo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.life-photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.life-photo-card:hover .life-photo-image {
+  transform: scale(1.05);
+}
+
+/* 移动端导航样式 */
+.mobile-nav-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1f2937;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mobile-nav-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.mobile-nav-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: white;
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-nav-open .mobile-nav-content {
+  transform: translateX(0);
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.mobile-nav-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.mobile-nav-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-nav-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mobile-nav-link:hover {
+  background: #f9fafb;
+  color: #2563eb;
+}
+
+.mobile-nav-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.mobile-nav-icon {
+  margin-right: 12px;
+  font-size: 1.1rem;
+}
+
+/* 桌面端固定导航 */
+.desktop-nav {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: none;
+}
+
+.desktop-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.desktop-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  color: #6b7280;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.desktop-nav-link:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #2563eb;
+  transform: scale(1.1);
+}
+
+.desktop-nav-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* 响应式显示控制 */
 @media (max-width: 768px) {
-  .floating-particles {
-    display: none; /* 在移动设备上隐藏粒子以提高性能 */
+  .desktop-nav {
+    display: none;
+  }
+  
+  .mobile-nav-toggle {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-nav {
+    display: block;
+  }
+  
+  .mobile-nav-toggle {
+    display: none;
   }
 }

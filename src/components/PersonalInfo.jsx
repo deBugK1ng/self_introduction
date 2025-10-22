@@ -1,6 +1,6 @@
 import React from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { Mail, Phone, MapPin, Github, Linkedin, Download } from 'lucide-react'
+import { Mail, Phone, MapPin, Download } from 'lucide-react'
 
 const PersonalInfo = () => {
   const [ref, isVisible] = useScrollAnimation(0.2)
@@ -11,10 +11,7 @@ const PersonalInfo = () => {
     education: "测绘工程硕士 · 地理信息系统方向",
     location: "武汉市",
     email: "254588201@qq.com",
-    phone: "13437166500",
-    github: "https://github.com/yezifan",
-    linkedin: "https://linkedin.com/in/yezifan",
-    description: "熟练掌握JavaScript的核心特性以及ES6+新特性，熟悉HTML5与CSS3，熟悉HTTP协议与网络并发请求Axios的调用和数据渲染，了解TypeScript，具备数据结构与算法基础，能够进行其他算法设计，设计解决方案；深入理解Vue，熟悉掌握Vue3全家桶，了解组件分层架构和项目组件化构建；熟悉市场主流的UI组件库，具备独立的Web开发能力，理解优化代码结构，并能够开发项目，提供项目的性能和稳定性。"
+    phone: "13437166500"
   }
 
   return (
@@ -42,9 +39,6 @@ const PersonalInfo = () => {
             <h1 className="text-5xl font-bold mb-4">{personalData.name}</h1>
             <h2 className="text-2xl font-light mb-2 text-blue-100">{personalData.title}</h2>
             <p className="text-lg text-blue-100 mb-6">{personalData.education}</p>
-            <p className="text-lg max-w-3xl mx-auto leading-relaxed text-white/90">
-              {personalData.description}
-            </p>
           </div>
 
           {/* 联系方式 */}
@@ -71,22 +65,8 @@ const PersonalInfo = () => {
           <div className={`flex justify-center gap-4 transition-all duration-1000 delay-800 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           }`}>
-            <a 
-              href={personalData.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 p-3 rounded-full text-white hover:scale-110"
-            >
-              <Github size={24} />
-            </a>
-            <a 
-              href={personalData.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 p-3 rounded-full text-white hover:scale-110"
-            >
-              <Linkedin size={24} />
-            </a>
+
+
             <button 
               onClick={() => window.open('/assests/个人简历 - yzf08.pdf', '_blank')}
               className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 px-6 py-3 rounded-full text-white hover:scale-105 flex items-center gap-2"

@@ -62,17 +62,16 @@ const ProfessionalSkills = () => {
     },
     {
       degree: "计算机科学与技术学士",
-      school: "湖北汽车工业学院·科技学院",
+      school: "湖北汽车工业学院科技学院",
       period: "2018.9 - 2022.6",
       description: "专注于Web开发技术和数据处理算法"
     }
   ]
 
   const certifications = [
-    "全国大学生创新大赛三等奖",
+    "中国国际大学生创新大赛三等奖",
     "多次研究生学业奖学金",
     "CET-4 英语四级证书",
-    "武汉大学测绘遥感信息工程全国重点实验室"
   ]
 
   return (
@@ -90,6 +89,93 @@ const ProfessionalSkills = () => {
             <p className="professional-skills-subtitle">
               扎实的技术基础，丰富的项目经验，持续学习的态度
             </p>
+          </div>
+
+          {/* 专业技能 */}
+          <div className="professional-skills-section">
+            <h3 className="professional-skills-section-title">专业技能</h3>
+            <div className="professional-abilities-list">
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  有两年以上前端开发经验，熟悉 JavaScript 的核心特性以及ES6+常用特性，熟悉 HTML5与CSS3，熟悉 HTTP 相关网络协议
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '100ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  并熟悉 Axios 的请求和数据渲染，了解TypeScript，具备数据结构与算法基础，能运用其思想分析问题，设计解决方案
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '200ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  深入理解 Vue，熟练掌握 Vue3 全家桶，了解部分底层实现原理和机制
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '300ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  熟悉前端工程化工具，如 Vite，Webpack，具备模块化、组件化开发思维，并应用于项目，提升项目的性能和稳定性
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '400ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  熟练使用 Git 代码管理工具进行版本管理与团队协作，理解并实践 commit 规范
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '500ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  有服务端开发经验（Python），熟悉服务端应用框架与 RESTful API 设计规范，能独立完成与后端数据交互联调
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '600ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  有监控开发经验，对 rtsp 流处理并渲染至Web端，实现海康/大华 PTZ 相机实时监控画面的显示与云台控制
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '700ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  熟悉可视化第三方库的使用，如 Cesium.js 、Three.js 、Echarts 以及 DataV，实现大屏、三维及图表展示效果
+                </p>
+              </div>
+              
+              <div className={`professional-ability-item ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`} style={{ transitionDelay: '800ms' }}>
+                <div className="professional-ability-bullet">•</div>
+                <p className="professional-ability-text">
+                  熟悉 Web 性能优化，有深入的性能优化实践经验
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* 技能展示 */}
