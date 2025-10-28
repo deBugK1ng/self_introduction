@@ -1,6 +1,6 @@
 import React from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { Heart, Mountain, Snowflake, Music } from 'lucide-react'
+import { Heart } from 'lucide-react'
 
 const LifeModule = () => {
   const [ref, isVisible] = useScrollAnimation(0.2)
@@ -8,31 +8,23 @@ const LifeModule = () => {
   const lifePhotos = [
     {
       id: 1,
-      image: '/assests/img/生活-爬山.jpg',
-      title: '登山探险',
-      description: '征服高峰，挑战自我，在山巅感受生命的壮阔',
-      icon: Mountain
+      image: '/media/img/生活-爬山.jpg',
+      title: '爱冒险'
     },
     {
       id: 2,
-      image: '/assests/img/生活-滑雪2.jpg',
-      title: '雪场飞驰',
-      description: '在雪花纷飞中感受速度与激情的完美结合',
-      icon: Snowflake
+      image: '/media/img/生活-滑雪2.jpg',
+      title: '爱运动'
     },
     {
       id: 3,
-      image: '/assests/img/生活-滑雪1.jpg',
-      title: '冰雪世界',
-      description: '拥抱冬日的纯净，享受滑雪带来的自由与快乐',
-      icon: Snowflake
+      image: '/media/img/生活-滑雪1.jpg',
+      title: '爱挑战'
     },
     {
       id: 4,
-      image: '/assests/img/生活-练琴.jpg',
-      title: '音乐时光',
-      description: '在琴键上寻找内心的宁静，用音符诠释生活的美好',
-      icon: Music
+      image: '/media/img/生活-练琴.jpg',
+      title: '爱音乐'
     }
   ]
 
@@ -50,38 +42,43 @@ const LifeModule = () => {
             <div className="flex items-center justify-center mb-4">
               <Heart className="text-pink-500 mr-3" size={32} />
               <h2 className="text-4xl font-bold text-gray-800">work-life balance</h2>
-
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               工作之余，我热爱探索生活的多彩面貌，在不同的体验中寻找灵感与快乐
             </p>
           </div>
 
-          {/* 照片网格 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* 生活卡片网格 - 类似技能卡片的大卡片设计 */}
+          <div className="life-cards-grid">
             {lifePhotos.map((photo, index) => {
-              const IconComponent = photo.icon
               return (
                 <div
                   key={photo.id}
-                  className={`life-photo-card transition-all duration-1000 delay-${index * 200} ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                  className={`life-card ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
                   }`}
+                  style={{ transitionDelay: `${index * 200}ms` }}
                 >
-                  <div className="relative overflow-hidden rounded-2xl shadow-lg group">
+                  <div className="life-card-image-container">
                     <img
                       src={photo.image}
                       alt={photo.title}
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="life-card-image"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <div className="flex items-center mb-2">
-                          <IconComponent size={20} className="mr-2" />
-                          <h3 className="text-lg font-semibold">{photo.title}</h3>
-                        </div>
-                        <p className="text-sm text-gray-200">{photo.description}</p>
+                    <div className="life-card-overlay">
+                      <div className="life-card-overlay-content">
+                        <h3 className="life-card-title">{photo.title}</h3>
                       </div>
+                    </div>
+                  </div>
+                  <div className="life-card-content">
+                    <div className="life-card-header">
+                      <div className="life-card-icon">
+                        <Heart className="w-6 h-6" />
+                      </div>
+                      <h4 className="life-card-name">
+                        {photo.title}
+                      </h4>
                     </div>
                   </div>
                 </div>

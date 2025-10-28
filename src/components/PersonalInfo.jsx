@@ -68,7 +68,7 @@ const PersonalInfo = () => {
 
 
             <button 
-              onClick={() => window.open('/assests/个人简历 - yzf08.pdf', '_blank')}
+              onClick={() => window.open('/media/个人简历 - yzf08.pdf', '_blank')}
               className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 px-6 py-3 rounded-full text-white hover:scale-105 flex items-center gap-2"
             >
               <Download size={20} />

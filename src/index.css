@@ -1126,7 +1126,8 @@ body {
   background-color: rgba(0, 0, 0, 0);
   transition: all 0.3s ease;
   display: flex;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .portfolio-card:hover .portfolio-image-overlay {
@@ -1673,7 +1674,7 @@ body {
   }
 }
 
-/* 生活模块样式 */
+/* 生活模块样式 - 优化版本 */
 .life-module-container {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
@@ -1707,6 +1708,76 @@ body {
   margin: 0 auto;
 }
 
+/* 新的Masonry风格布局 */
+.life-photos-masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+  align-items: start;
+}
+
+.life-photo-card-new {
+  background-color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+
+.life-photo-card-new:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* 图片容器使用aspect-ratio确保一致性 */
+.life-photo-card-new .aspect-w-4 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.life-photo-card-new .aspect-w-4 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 响应式优化 */
+@media (min-width: 768px) {
+  .life-photos-masonry {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .life-photos-masonry {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .life-photos-masonry {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .life-photo-card-new {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* 保留原有样式作为备用 */
 .life-photos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1944,5 +2015,131 @@ body {
   
   .mobile-nav-toggle {
     display: none;
+  }
+}
+
+/* 新的生活卡片样式 - 类似技能卡片的大卡片设计 */
+.life-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .life-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.life-card {
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: all 0.7s ease;
+  position: relative;
+}
+
+.life-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.life-card-image-container {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.life-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.life-card:hover .life-card-image {
+  transform: scale(1.1);
+}
+
+.life-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.life-card:hover .life-card-overlay {
+  opacity: 1;
+}
+
+.life-card-overlay-content {
+  color: white;
+}
+
+.life-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.life-card-content {
+  padding: 1.5rem;
+}
+
+.life-card-header {
+  display: flex;
+  align-items: center;
+}
+
+.life-card-icon {
+  color: #2563eb;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.life-card-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+/* 移动端优化 */
+@media (max-width: 640px) {
+  .life-cards-grid {
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+  }
+  
+  .life-card-image-container {
+    height: 250px;
+  }
+  
+  .life-card-content {
+    padding: 1rem;
+  }
+  
+  .life-card-overlay {
+    padding: 1.5rem;
+  }
+  
+  .life-card-title {
+    font-size: 1.25rem;
+  }
+  
+  .life-card-name {
+    font-size: 1.125rem;
   }
 }
