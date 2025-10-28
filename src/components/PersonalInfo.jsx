@@ -1,9 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { Mail, Phone, MapPin, Download } from 'lucide-react'
 
 const PersonalInfo = () => {
   const [ref, isVisible] = useScrollAnimation(0.2)
+  const [isAvatarFixed, setIsAvatarFixed] = useState(false)
+  const avatarRef = useRef(null)
+  const sectionRef = useRef(null)
+
+  // 滚动监听逻辑 - 检测头像是否需要固定定位
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current && avatarRef.current) {
+        const sectionRect = sectionRef.current.getBoundingClientRect()
+        const avatarRect = avatarRef.current.getBoundingClientRect()
+        
+        // 当PersonalInfo section的底部滚动到视窗顶部时，固定头像
+        const shouldFixAvatar = sectionRect.bottom <= 0
+        
+        setIsAvatarFixed(shouldFixAvatar)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // 眼睛跟随鼠标移动的逻辑
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      const eyeballs = document.querySelectorAll('.eyeball')
+      eyeballs.forEach((eyeball) => {
+        const eyeContainer = eyeball.closest('.eye-container')
+        const rect = eyeContainer.getBoundingClientRect()
+        const eyeCenterX = rect.left + rect.width / 2
+        const eyeCenterY = rect.top + rect.height / 2
+        
+        const angle = Math.atan2(event.clientY - eyeCenterY, event.clientX - eyeCenterX)
+        const distance = Math.min(rect.width / 6, rect.height / 6) // 限制移动距离
+        
+        const x = Math.cos(angle) * distance
+        const y = Math.sin(angle) * distance
+        
+        eyeball.style.transform = `translate(${x}px, ${y}px)`
+      })
+    }
+
+    document.addEventListener('mousemove', handleMouseMove)
+    return () => document.removeEventListener('mousemove', handleMouseMove)
+  }, [])
 
   const personalData = {
     name: "叶子凡",
@@ -15,7 +60,111 @@ const PersonalInfo = () => {
   }
 
   return (
-    <div className="gradient-bg min-h-screen flex items-center justify-center section-padding">
+    <>
+      {/* 固定在右上角的头像 */}
+      {isAvatarFixed && (
+        <div 
+          className="fixed z-50 transition-all duration-500 ease-in-out transform"
+          style={{
+            top: 'calc(1rem + 30px)',
+            left: 'calc(1rem + 50px)',
+            animation: isAvatarFixed ? 'slideInFromRight 0.5s ease-out' : 'slideOutToRight 0.5s ease-in'
+          }}
+        >
+          <div className="face w-32 h-32 rounded-full border-4 border-white/30 relative" style={{
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            backgroundColor: '#FFC107',
+            boxShadow: `
+              0 8px 32px rgba(0, 0, 0, 0.3),
+              0 4px 16px rgba(0, 0, 0, 0.2),
+              inset 0 2px 8px rgba(255, 255, 255, 0.3),
+              inset 0 -2px 8px rgba(0, 0, 0, 0.1)
+            `,
+            transform: 'perspective(200px) rotateX(5deg)',
+            animation: 'faceFloat 4s ease-in-out infinite',
+            transformStyle: 'preserve-3d'
+          }}>
+            {/* 眼睛容器 - 原始大小 */}
+            <div className="eyes" style={{display: 'flex', gap: '20px', marginBottom: '16px'}}>
+              {/* 左眼 */}
+              <div className="eye-container" style={{
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: 'white', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                position: 'relative',
+                boxShadow: `
+                  0 3px 8px rgba(0, 0, 0, 0.2),
+                  inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                  inset 0 -2px 4px rgba(0, 0, 0, 0.1)
+                `,
+                transform: 'translateZ(2px)'
+              }}>
+                <div className="eyeball" style={{
+                  width: '18px', 
+                  height: '18px', 
+                  backgroundColor: 'black', 
+                  borderRadius: '50%', 
+                  transition: 'transform 0.1s ease-out',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                  transform: 'translateZ(4px)'
+                }}></div>
+              </div>
+              {/* 右眼 */}
+              <div className="eye-container" style={{
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: 'white', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                position: 'relative',
+                boxShadow: `
+                  0 3px 8px rgba(0, 0, 0, 0.2),
+                  inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                  inset 0 -2px 4px rgba(0, 0, 0, 0.1)
+                `,
+                transform: 'translateZ(2px)'
+              }}>
+                <div className="eyeball" style={{
+                  width: '18px', 
+                  height: '18px', 
+                  backgroundColor: 'black', 
+                  borderRadius: '50%', 
+                  transition: 'transform 0.1s ease-out',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                  transform: 'translateZ(4px)'
+                }}></div>
+              </div>
+            </div>
+            {/* 嘴巴 - 原始大小 */}
+            <div 
+              className="mouth" 
+              style={{
+                width: '50px', 
+                height: '25px', 
+                backgroundColor: '#B8860B', 
+                borderBottomLeftRadius: '25px', 
+                borderBottomRightRadius: '25px',
+                borderTopLeftRadius: '0px',
+                borderTopRightRadius: '0px',
+                animation: 'mouthMorph 0.7s ease-in-out infinite alternate',
+                transformOrigin: 'center top'
+              }}
+            ></div>
+          </div>
+        </div>
+      )}
+
+      {/* 原始PersonalInfo section */}
+      <div ref={sectionRef} className="gradient-bg min-h-screen flex items-center justify-center section-padding">
       <div 
         ref={ref}
         className={`container-max-width transition-all duration-1000 ${
@@ -24,11 +173,100 @@ const PersonalInfo = () => {
       >
         <div className="text-center text-white">
           {/* 头像 */}
-          <div className={`mb-8 transition-all duration-1000 delay-200 ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-          }`}>
-            <div className="w-32 h-32 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/30 flex items-center justify-center text-6xl font-bold text-white shadow-2xl">
-              叶
+          <div 
+            ref={avatarRef}
+            className={`mb-8 transition-all duration-1000 delay-200 ${
+              isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+            }`}
+          >
+            <div className="face w-32 h-32 mx-auto rounded-full border-4 border-white/30 relative" style={{
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              backgroundColor: '#FFC107',
+              boxShadow: `
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                inset 0 2px 8px rgba(255, 255, 255, 0.3),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.1)
+              `,
+              transform: 'perspective(200px) rotateX(5deg)',
+              animation: 'faceFloat 4s ease-in-out infinite',
+              transformStyle: 'preserve-3d'
+            }}>
+              {/* 眼睛容器 */}
+              <div className="eyes" style={{display: 'flex', gap: '16px', marginBottom: '12px'}}>
+                {/* 左眼 */}
+                <div className="eye-container" style={{
+                  width: '32px', 
+                  height: '32px', 
+                  backgroundColor: 'white', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  position: 'relative',
+                  boxShadow: `
+                    0 4px 8px rgba(0, 0, 0, 0.2),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                    inset 0 -1px 2px rgba(0, 0, 0, 0.1)
+                  `,
+                  transform: 'translateZ(4px)'
+                }}>
+                  <div className="eyeball" style={{
+                    width: '14px', 
+                    height: '14px', 
+                    backgroundColor: 'black', 
+                    borderRadius: '50%', 
+                    transition: 'transform 0.1s ease-out',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(2px)'
+                  }}></div>
+                </div>
+                {/* 右眼 */}
+                <div className="eye-container" style={{
+                  width: '32px', 
+                  height: '32px', 
+                  backgroundColor: 'white', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  position: 'relative',
+                  boxShadow: `
+                    0 4px 8px rgba(0, 0, 0, 0.2),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                    inset 0 -1px 2px rgba(0, 0, 0, 0.1)
+                  `,
+                  transform: 'translateZ(4px)'
+                }}>
+                  <div className="eyeball" style={{
+                    width: '14px', 
+                    height: '14px', 
+                    backgroundColor: 'black', 
+                    borderRadius: '50%', 
+                    transition: 'transform 0.1s ease-out',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(2px)'
+                  }}></div>
+                </div>
+              </div>
+              {/* 嘴巴 */}
+              <div 
+                className="mouth" 
+                style={{
+                  width: '40px', 
+                  height: '20px', 
+                  backgroundColor: '#B8860B', 
+                  borderBottomLeftRadius: '20px', 
+                  borderBottomRightRadius: '20px',
+                  borderTopLeftRadius: '0px',
+                  borderTopRightRadius: '0px',
+                  animation: 'mouthMorph 0.7s ease-in-out infinite alternate',
+                  transformOrigin: 'center top'
+                }}
+              ></div>
             </div>
           </div>
 
@@ -89,7 +327,8 @@ const PersonalInfo = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 
