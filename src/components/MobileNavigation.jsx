@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Home, User, Briefcase, Camera } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, Camera, ArrowUp } from 'lucide-react';
 
 const MobileNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('personal');
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const navigationItems = [
     { id: 'personal', label: '个人信息', icon: Home },
@@ -12,12 +13,13 @@ const MobileNavigation = () => {
     { id: 'life', label: '生活照片', icon: Camera }
   ];
 
-  // 监听滚动位置，自动更新活跃导航项
+  // 监听滚动位置，自动更新活跃导航项和回到顶部按钮显示
   useEffect(() => {
     const handleScroll = () => {
       const sections = navigationItems.map(item => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 100;
 
+      // 更新活跃导航项
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
@@ -25,6 +27,9 @@ const MobileNavigation = () => {
           break;
         }
       }
+
+      // 控制回到顶部按钮显示（滚动超过300px时显示）
+      setShowScrollToTop(window.scrollY > 300);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -37,6 +42,13 @@ const MobileNavigation = () => {
       element.scrollIntoView({ behavior: 'smooth' });
       setIsOpen(false);
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -100,6 +112,19 @@ const MobileNavigation = () => {
               </li>
             );
           })}
+          
+          {/* 回到顶部按钮 */}
+          {showScrollToTop && (
+            <li className="desktop-nav-item">
+              <button
+                className="desktop-nav-link scroll-to-top"
+                onClick={scrollToTop}
+                title="回到顶部"
+              >
+                <ArrowUp className="desktop-nav-icon" />
+              </button>
+            </li>
+          )}
         </ul>
       </nav>
     </>
