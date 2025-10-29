@@ -198,15 +198,30 @@ const PersonalInfo = () => {
                 `,
                 transform: 'translateZ(2px)'
               }}>
-                <div className="eyeball" style={{
-                  width: '18px', 
-                  height: '18px', 
-                  backgroundColor: 'black', 
-                  borderRadius: '50%', 
-                  transition: 'transform 0.1s ease-out',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
-                  transform: 'translateZ(4px)'
-                }}></div>
+                {isDragging ? (
+                  // 拖拽时显示 > 形状 - 只有轮廓
+                  <div style={{
+                    width: '12px',
+                    height: '12px',
+                    borderTop: '2px solid black',
+                    borderRight: '2px solid black',
+                    borderBottom: 'none',
+                    borderLeft: 'none',
+                    transform: 'rotate(45deg) translateZ(4px)',
+                    backgroundColor: 'transparent'
+                  }}></div>
+                ) : (
+                  // 正常时显示圆形眼球
+                  <div className="eyeball" style={{
+                    width: '18px', 
+                    height: '18px', 
+                    backgroundColor: 'black', 
+                    borderRadius: '50%', 
+                    transition: 'transform 0.1s ease-out',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(4px)'
+                  }}></div>
+                )}
               </div>
               {/* 右眼 */}
               <div className="eye-container" style={{
@@ -225,15 +240,30 @@ const PersonalInfo = () => {
                 `,
                 transform: 'translateZ(2px)'
               }}>
-                <div className="eyeball" style={{
-                  width: '18px', 
-                  height: '18px', 
-                  backgroundColor: 'black', 
-                  borderRadius: '50%', 
-                  transition: 'transform 0.1s ease-out',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
-                  transform: 'translateZ(4px)'
-                }}></div>
+                {isDragging ? (
+                  // 拖拽时显示 < 形状 - 只有轮廓
+                  <div style={{
+                    width: '12px',
+                    height: '12px',
+                    borderTop: '2px solid black',
+                    borderLeft: '2px solid black',
+                    borderBottom: 'none',
+                    borderRight: 'none',
+                    transform: 'rotate(-45deg) translateZ(4px)',
+                    backgroundColor: 'transparent'
+                  }}></div>
+                ) : (
+                  // 正常时显示圆形眼球
+                  <div className="eyeball" style={{
+                    width: '18px', 
+                    height: '18px', 
+                    backgroundColor: 'black', 
+                    borderRadius: '50%', 
+                    transition: 'transform 0.1s ease-out',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(4px)'
+                  }}></div>
+                )}
               </div>
             </div>
             {/* 嘴巴 - 原始大小 */}

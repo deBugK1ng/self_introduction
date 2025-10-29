@@ -56,8 +56,7 @@
   transform: translateZ(0);
   /* 优化渲染性能 */
   backface-visibility: hidden;
-  /* 减少重绘 */
-  pointer-events: none;
+  /* 保持拖拽手势 - 移除 pointer-events: none */
 }
 
 .dragging * {
@@ -65,6 +64,8 @@
   transition: none !important;
   /* 禁用子元素的动画 */
   animation-play-state: paused !important;
+  /* 确保子元素不干扰鼠标样式 */
+  pointer-events: none;
 }
 
 /* 回到顶部按钮动画 */
