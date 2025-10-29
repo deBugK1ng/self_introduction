@@ -41,6 +41,32 @@
   }
 }
 
+/* 拖拽相关样式 - 性能优化版本 */
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
+/* 拖拽时的性能优化 */
+.dragging {
+  /* 启用硬件加速 */
+  transform: translateZ(0);
+  /* 优化渲染性能 */
+  backface-visibility: hidden;
+  /* 减少重绘 */
+  pointer-events: none;
+}
+
+.dragging * {
+  /* 拖拽时禁用子元素的过渡动画 */
+  transition: none !important;
+  /* 禁用子元素的动画 */
+  animation-play-state: paused !important;
+}
+
 /* 回到顶部按钮动画 */
 .scroll-to-top {
   animation: slideInFromBottom 0.3s ease-out;

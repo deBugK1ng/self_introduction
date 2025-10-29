@@ -5,8 +5,16 @@ import { Mail, Phone, MapPin, Download } from 'lucide-react'
 const PersonalInfo = () => {
   const [ref, isVisible] = useScrollAnimation(0.2)
   const [isAvatarFixed, setIsAvatarFixed] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
+  const [avatarPosition, setAvatarPosition] = useState({ 
+    x: 50,
+    y: 50 
+  })
   const avatarRef = useRef(null)
   const sectionRef = useRef(null)
+  const animationFrameRef = useRef(null)
+  const lastMousePosition = useRef({ x: 0, y: 0 })
 
   // 滚动监听逻辑 - 检测头像是否需要固定定位
   useEffect(() => {
@@ -50,6 +58,86 @@ const PersonalInfo = () => {
     return () => document.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
+  // 拖拽事件处理 - 优化版本
+  const handleMouseDown = (e) => {
+    if (!isAvatarFixed) return;
+    
+    setIsDragging(true);
+    const rect = e.currentTarget.getBoundingClientRect();
+    setDragOffset({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+    
+    // 记录初始鼠标位置
+    lastMousePosition.current = { x: e.clientX, y: e.clientY };
+    
+    // 阻止默认行为，避免选中文本等
+    e.preventDefault();
+  };
+
+  const updateAvatarPosition = (clientX, clientY) => {
+    const newX = clientX - dragOffset.x;
+    const newY = clientY - dragOffset.y;
+    
+    // 边界检查
+    const maxX = window.innerWidth - 128; // 头像宽度
+    const maxY = window.innerHeight - 128; // 头像高度
+    
+    const boundedX = Math.max(0, Math.min(newX, maxX));
+    const boundedY = Math.max(0, Math.min(newY, maxY));
+    
+    setAvatarPosition({ x: boundedX, y: boundedY });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    // 取消之前的动画帧
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    
+    // 更新鼠标位置
+    lastMousePosition.current = { x: e.clientX, y: e.clientY };
+    
+    // 使用 requestAnimationFrame 优化性能
+    animationFrameRef.current = requestAnimationFrame(() => {
+      updateAvatarPosition(lastMousePosition.current.x, lastMousePosition.current.y);
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    
+    // 清理动画帧
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+  };
+
+  // 添加全局鼠标事件监听 - 优化版本
+  useEffect(() => {
+    if (isDragging) {
+      // 使用 passive 选项优化性能
+      const options = { passive: false };
+      document.addEventListener('mousemove', handleMouseMove, options);
+      document.addEventListener('mouseup', handleMouseUp, options);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove, options);
+        document.removeEventListener('mouseup', handleMouseUp, options);
+        
+        // 清理动画帧
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
+        }
+      };
+    }
+  }, [isDragging]); // 移除 dragOffset 依赖，减少不必要的重新绑定
+
   const personalData = {
     name: "叶子凡",
     title: "Web前端开发工程师",
@@ -64,12 +152,16 @@ const PersonalInfo = () => {
       {/* 固定在右上角的头像 */}
       {isAvatarFixed && (
         <div 
-          className="fixed z-50 transition-all duration-500 ease-in-out transform"
+          className={`fixed z-50 ${isDragging ? 'cursor-grabbing scale-105 dragging' : 'cursor-grab'}`}
           style={{
-            top: 'calc(1rem + 30px)',
-            left: 'calc(1rem + 50px)',
-            animation: isAvatarFixed ? 'slideInFromRight 0.5s ease-out' : 'slideOutToRight 0.5s ease-in'
+            left: `${avatarPosition.x}px`,
+            top: `${avatarPosition.y}px`,
+            animation: !isDragging && isAvatarFixed ? 'slideInFromRight 0.5s ease-out' : 'none',
+            filter: isDragging ? 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' : 'none',
+            transition: isDragging ? 'none' : 'transform 0.2s ease-out, filter 0.2s ease-out',
+            willChange: isDragging ? 'transform' : 'auto'
           }}
+          onMouseDown={handleMouseDown}
         >
           <div className="face w-32 h-32 rounded-full border-4 border-white/30 relative" style={{
             display: 'flex', 
@@ -306,7 +398,7 @@ const PersonalInfo = () => {
 
 
             <button 
-              onClick={() => window.open('/media/个人简历 - yzf08.pdf', '_blank')}
+              onClick={() => window.open('/media/个人简历 - yzf11.pdf', '_blank')}
               className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 px-6 py-3 rounded-full text-white hover:scale-105 flex items-center gap-2"
             >
               <Download size={20} />
